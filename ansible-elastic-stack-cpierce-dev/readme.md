@@ -1,4 +1,4 @@
-# Ansible Elastic Stack (from Connor)
+# Ansible Elastic Stack
 To prepare for deployment:
 1. Edit inventory.yml to update node names/IP addresses
     ```
@@ -16,4 +16,4 @@ To prepare for deployment:
 1. If deploying Fleet:
    1. Download Elastic Agent for your version of the Stack
    1. Place the `elastic-agent-<version>.tar.gz` file in the `packages` directory
-1. Run `ansible-playbook -i inventory.yml` to deploy all configured node types  
+1. Run `ansible-playbook -i inventory.yml` to deploy all configured node types
