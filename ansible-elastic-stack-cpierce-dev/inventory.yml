@@ -1,0 +1,62 @@
+all:
+  vars:
+    # Cluster name for Elasticsearch
+    clusterName: "my-cluster"
+    # Optional environment variable
+    esEnvironment: "my-cluster"
+    ansible_ssh_user: "ansible"
+    ansible_ssh_password: 'supersecure!'
+    ansible_sudo_pass: "{{ ansible_ssh_password }}"
+    ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+  hosts:
+    host1.my.tld:
+      ansible_host: 192.168.1.1
+    host2.my.tld:
+      ansible_host: 192.168.1.2
+    host3.my.tld:
+      ansible_host: 192.168.1.3
+    host4.my.tld:
+      ansible_host: 192.168.1.4
+
+
+elasticsearch:
+  vars: 
+    pathData: "/data"
+  hosts:
+    host1.my.tld:
+    host2.my.tld:
+    host3.my.tld:
+
+
+kibana:
+  hosts:
+    host4.my.tld:
+
+logstash:
+  hosts:
+    
+filebeat:
+  children:
+    elasticsearch:
+      vars:
+        filebeatModules: ["elasticsearch"]
+    kibana:
+      vars:
+        filebeatModules: ["kibana"]
+
+metricbeat:
+  children:
+    elasticsearch:
+      vars:
+        metricbeatModules: ["elasticsearch"]
+    kibana:
+      vars:
+        metricbeatModules: ["kibana"]
+
+haproxy:
+  hosts:
+    host4.my.tld:
+
+fleet_server:
+  hosts:
+    host4.my.tld:
